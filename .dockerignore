@@ -1,0 +1,10 @@
+.env
+.idea
+**/__pycache__/
+**/.pytest_cache/
+**/allure-results/
+reports/
+.gitignore
+.dockerignore
+screenshots
+build
