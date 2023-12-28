@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY . .
+
 RUN apt-get update && apt-get install -y \
     ttf-unifont \
     xfonts-cyrillic \
@@ -14,8 +16,6 @@ RUN apt-get update && apt-get install -y \
     libjpeg-turbo8 \
     libvpx6 \
     libwebp6
-
-COPY . .
 
 RUN python -m playwright install
 RUN python -m playwright install-deps
