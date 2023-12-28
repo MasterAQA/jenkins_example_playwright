@@ -71,4 +71,3 @@ item from the cart, check that the cart is empty
 
 
 
-
