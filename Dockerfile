@@ -13,5 +13,6 @@ RUN pip3 install -r ../requirements.txt
 RUN python -m playwright install
 
 
+
 WORKDIR /usr/src/
 RUN touch .env
