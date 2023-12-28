@@ -1,25 +1,15 @@
 FROM python:3.10-slim
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse" > /etc/apt/sources.list
-RUN apt-get update && apt-get install -y \
-    ttf-unifont \
-    xfonts-cyrillic \
-    ttf-ubuntu-font-family \
-    libenchant1c2a \
-    libicu66 \
-    libjpeg-turbo8 \
-    libvpx6 \
-    libwebp6
+RUN apt-get -yqq update && apt-get -yqq upgrade
 
-WORKDIR /usr/src/app
+RUN apt-get install -yqq python3 \
+                         python3-pip \
+                         software-properties-common \
+                         wget \
+                         unzip
+ADD . ./
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-
-
+RUN pip3 install -r ../requirements.txt
 RUN python -m playwright install
 RUN python -m playwright install-deps
 
