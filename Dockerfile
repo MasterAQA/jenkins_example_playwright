@@ -1,12 +1,6 @@
 FROM python:3.10-slim
 
-WORKDIR /usr/src/app
-
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse" > /etc/apt/sources.list
 RUN apt-get update && apt-get install -y \
     ttf-unifont \
     xfonts-cyrillic \
@@ -16,6 +10,15 @@ RUN apt-get update && apt-get install -y \
     libjpeg-turbo8 \
     libvpx6 \
     libwebp6
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+
 
 RUN python -m playwright install
 RUN python -m playwright install-deps
