@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     docker.image('mcr.microsoft.com/playwright/python:v1.40.0-jammy').inside {
-                        withEnv(['MY_ENV_VAR=${MY_ENV_VAR}']) {
+                        withEnv(['APPLE_USERNAME=${APPLE_USERNAME}, APPLE_PASSWORD=${APPLE_PASSWORD}']) {
                             sh 'python -m playwright install'
                             sh 'python -m playwright install-deps'
                         }
