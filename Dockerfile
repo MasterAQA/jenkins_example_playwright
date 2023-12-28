@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.10.6
 
 RUN apt-get -yqq update && apt-get -yqq upgrade
 
