@@ -20,7 +20,6 @@ def test_add_product(page):
 
     store_page.cart.check_is_visible()
 
-
 @pytest.mark.only_browser("chromium")
 # @pytest.mark.flaky(reruns=2)
 @allure.feature("Cart")
