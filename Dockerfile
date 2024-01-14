@@ -11,8 +11,6 @@ ADD . ./
 
 RUN pip3 install -r ../requirements.txt
 RUN python -m playwright install
+RUN python -m playwright install-deps
 
-
-
-WORKDIR /usr/src/
-RUN touch .env
+RUN python pytest

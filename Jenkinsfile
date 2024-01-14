@@ -1,7 +1,7 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
     agent {
-        dockerfile true
+        docker { image 'python:3.10.6' }
     }
     stages {
         stage('run from docker') {
