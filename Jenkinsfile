@@ -3,7 +3,8 @@ pipeline {
    stages {
       stage('e2e-tests') {
          steps {
-            sh 'pip3 install -r requirements.txt --user'
+            sh 'sudo -H pip3 install --upgrade pip'
+            sh 'sudo -H pip3 install -r requirements.txt'
             sh 'pytest'
          }
       }
