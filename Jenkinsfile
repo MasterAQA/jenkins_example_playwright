@@ -1,8 +1,10 @@
+/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent any
+    agent {
+        docker { image 'python:3.10.6' }
+    }
 
     environment {
-        DOCKER_IMAGE = 'python:3.10.6'
         APPLE_USERNAME = 'JIsyri6824'
         APPLE_PASSWORD = '51246243'
     }
@@ -10,22 +12,18 @@ pipeline {
     stages {
         stage('Install dependencies') {
             steps {
-                script {
-                    docker.image(DOCKER_IMAGE).run("-v ${pwd()}/:/app") {
-                        sh 'pip install -r /app/requirements.txt'
-                    }
-                }
+                sh 'pip install -r requirements.txt'
             }
         }
 
         stage('Install playwright dependencies') {
             steps {
                 script {
-                    docker.image(DOCKER_IMAGE).inside("-v ${pwd()}/:/app") {
+                    docker.image('python:3.10.6').inside {
                         withEnv(['APPLE_USERNAME=${APPLE_USERNAME}',
-                                'APPLE_PASSWORD=${APPLE_PASSWORD}']) {
-                            sh 'python -m playwright install'
-                            sh 'python -m playwright install-deps'
+                        'APPLE_PASSWORD=${APPLE_USERNAME}']) {
+                            sh 'python3 -m playwright install'
+                            sh 'python3 -m playwright install-deps'
                         }
                     }
                 }
@@ -34,11 +32,7 @@ pipeline {
 
         stage('Run e2e tests') {
             steps {
-                script {
-                    docker.image(DOCKER_IMAGE).run("-v ${pwd()}/:/app") {
-                        sh 'pytest'
-                    }
-                }
+                sh 'pytest'
             }
         }
     }
