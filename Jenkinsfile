@@ -5,7 +5,7 @@ pipeline {
          steps {
             script {
               // Устанавливаем пакеты в /usr/local
-             sh 'pip install --no-cache-dir --prefix=/usr/ -r requirements.txt --ignore-installed'
+             sh 'pip install --no-cache-dir --user -r requirements.txt --ignore-installed'
 
             // Запускаем тесты
             sh 'pytest'
