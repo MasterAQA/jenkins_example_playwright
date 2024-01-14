@@ -4,14 +4,11 @@ pipeline {
       stage('e2e-tests') {
          steps {
             script {
-               // Устанавливаем пакеты в другую директорию
-              sh 'PYTHONUSERBASE=/install pip install --user -r requirements.txt'
+              // Устанавливаем пакеты в /usr/local
+             sh 'pip install --user --prefix=/usr/local -r requirements.txt'
 
-              // Убеждаемся, что исполняемый файл pytest доступен в PATH
-              sh 'export PATH=$PATH:/install/bin'
-
-              // Запускаем тесты
-              sh 'pytest'
+             // Запускаем тесты
+             sh 'pytest'
             }
          }
       }
