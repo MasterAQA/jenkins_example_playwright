@@ -1,7 +1,7 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
     agent {
-        agent { docker { image 'mcr.microsoft.com/playwright/python:v1.40.0-jammy' } }
+        docker { image 'mcr.microsoft.com/playwright/python:v1.40.0-jammy' }
     }
 
     environment {
