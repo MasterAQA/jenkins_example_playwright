@@ -22,8 +22,8 @@ pipeline {
                     docker.image('python:3.10.6').inside {
                         withEnv(['APPLE_USERNAME=${APPLE_USERNAME}',
                         'APPLE_PASSWORD=${APPLE_USERNAME}']) {
-                            sh 'python -m playwright install --user'
-                            sh 'python -m playwright install-deps --user'
+                            sh 'sudo python -m playwright install --user'
+                            sh 'sudo python -m playwright install-deps --user'
                         }
                     }
                 }
