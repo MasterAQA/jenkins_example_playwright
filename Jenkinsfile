@@ -3,8 +3,10 @@ pipeline {
    stages {
       stage('e2e-tests') {
          steps {
-            sh 'sudo -H pip3 install --upgrade pip'
-            sh 'sudo -H pip3 install -r requirements.txt'
+//             sh 'sudo -H pip3 install --upgrade pip'
+            sh '''python3 -m venv env
+                 source ./env/bin/activate
+                 python -m pip install package -r requirements.txt'''
             sh 'pytest'
          }
       }
