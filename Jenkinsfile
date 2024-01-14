@@ -1,43 +1,42 @@
+/* Requires the Docker Pipeline plugin */
 pipeline {
     agent {
-        docker {
-            image 'python:3.10.6'
-        }
+        docker { image 'python:3.10.6' }
+    }
+
+    environment {
+        APPLE_USERNAME = 'JIsyri6824'
+        APPLE_PASSWORD = '51246243'
     }
 
     stages {
         stage('Install dependencies') {
             steps {
-                script {
-                    sh 'apt-get -yqq update && apt-get -yqq upgrade'
-                    sh 'apt-get install -yqq python3 python3-pip software-properties-common wget unzip'
-                }
+                sh 'pip install -r requirements.txt'
             }
         }
 
-        stage('Setup environment') {
+        stage('Install playwright dependencies') {
             steps {
                 script {
-                    // Copy files to the workspace
-                    sh 'cp -r ./* $WORKSPACE/'
-                    dir('$WORKSPACE') {
-                        // Install Python dependencies
-                        sh 'pip3 install -r requirements.txt'
-
-                        // Install Playwright and its dependencies
-                        sh 'python3 -m playwright install'
-                        sh 'python3 -m playwright install-deps'
+                    docker.image('python:3.10.6').inside {
+                        withEnv(['APPLE_USERNAME=${APPLE_USERNAME}',
+                        'APPLE_PASSWORD=${APPLE_USERNAME}']) {
+                            sh '''sudo apt-get update -y
+                                    sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev -y
+                                    pip install -e.
+                                    python -m playwright install'''
+//                             sh 'python3 -m playwright install'
+//                             sh 'python3 -m playwright install-deps'
+                        }
                     }
                 }
             }
         }
 
-        stage('Run tests') {
+        stage('Run e2e tests') {
             steps {
-                script {
-                    // Run pytest
-                    sh 'python3 -m pytest'
-                }
+                sh 'pytest'
             }
         }
     }
