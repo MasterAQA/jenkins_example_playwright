@@ -4,7 +4,8 @@ pipeline {
       stage('e2e-tests') {
          steps {
 //             sh 'sudo -H pip3 install --upgrade pip'
-            sh '''python3 -m venv env
+            sh '''apt install python3.10-venv
+                 python3 -m venv env
                  source ./env/bin/activate
                  python -m pip install package -r requirements.txt'''
             sh 'pytest'
