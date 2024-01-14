@@ -1,38 +1,43 @@
-/* Requires the Docker Pipeline plugin */
 pipeline {
     agent {
-        docker { image 'python:3.10.6' }
-    }
-
-    environment {
-        APPLE_USERNAME = 'JIsyri6824'
-        APPLE_PASSWORD = '51246243'
+        docker {
+            image 'python:3.10.6'
+        }
     }
 
     stages {
         stage('Install dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                script {
+                    sh 'apt-get -yqq update && apt-get -yqq upgrade'
+                    sh 'apt-get install -yqq python3 python3-pip software-properties-common wget unzip'
+                }
             }
         }
 
-        stage('Install playwright dependencies') {
+        stage('Setup environment') {
             steps {
                 script {
-                    docker.image('python:3.10.6').inside {
-                        withEnv(['APPLE_USERNAME=${APPLE_USERNAME}',
-                        'APPLE_PASSWORD=${APPLE_USERNAME}']) {
-                            sh 'python3 -m playwright install'
-                            sh 'python3 -m playwright install-deps'
-                        }
+                    // Copy files to the workspace
+                    sh 'cp -r ./* $WORKSPACE/'
+                    dir('$WORKSPACE') {
+                        // Install Python dependencies
+                        sh 'pip3 install -r requirements.txt'
+
+                        // Install Playwright and its dependencies
+                        sh 'python3 -m playwright install'
+                        sh 'python3 -m playwright install-deps'
                     }
                 }
             }
         }
 
-        stage('Run e2e tests') {
+        stage('Run tests') {
             steps {
-                sh 'pytest'
+                script {
+                    // Run pytest
+                    sh 'python3 -m pytest'
+                }
             }
         }
     }
