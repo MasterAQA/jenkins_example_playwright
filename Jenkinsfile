@@ -1,7 +1,7 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
     agent {
-        docker { image 'python:3.10.6' }
+        agent { docker { image 'mcr.microsoft.com/playwright/python:v1.40.0-jammy' } }
     }
 
     environment {
@@ -16,23 +16,21 @@ pipeline {
             }
         }
 
-        stage('Install playwright dependencies') {
-            steps {
-                script {
-                    docker.image('python:3.10.6').inside {
-                        withEnv(['APPLE_USERNAME=${APPLE_USERNAME}',
-                        'APPLE_PASSWORD=${APPLE_USERNAME}']) {
-                            sh '''sudo apt-get update -y
-                                    sudo apt-get install libgnutls28-dev libcurl4-openssl-dev libssl-dev -y
-                                    pip install -e.
-                                    python -m playwright install'''
-//                             sh 'python3 -m playwright install'
-//                             sh 'python3 -m playwright install-deps'
-                        }
-                    }
-                }
-            }
-        }
+//         stage('Install playwright dependencies') {
+//             steps {
+//                 script {
+//                     docker.image('python:3.10.6').inside {
+//                         withEnv(['APPLE_USERNAME=${APPLE_USERNAME}',
+//                         'APPLE_PASSWORD=${APPLE_USERNAME}']) {
+//                             sh '''pip install playwright
+//                             playwright install --with-deps'''
+// //                             sh 'python3 -m playwright install'
+// //                             sh 'python3 -m playwright install-deps'
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
         stage('Run e2e tests') {
             steps {
