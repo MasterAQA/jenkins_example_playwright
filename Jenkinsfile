@@ -1,32 +1,39 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
-  agent {
-    docker {
-      image 'mcr.microsoft.com/playwright:v1.17.2-focal'
+    agent {
+        docker { image 'python:3.10.6' }
     }
-  }
-  stages {
-    stage('install playwright') {
-      steps {
-        sh '''
-          python -m playwright install
-          python -m playwright install-deps
-        '''
-      }
+
+    environment {
+        APPLE_USERNAME = 'JIsyri6824'
+        APPLE_PASSWORD = '51246243'
     }
-    stage('test') {
-      steps {
-        sh '''
-          python playwright tests --list
-          python playwright test
-        '''
-      }
-      post {
-        success {
-          archiveArtifacts(artifacts: 'homepage-*.png', followSymlinks: false)
-          sh 'rm -rf *.png'
+
+    stages {
+        stage('Install dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
         }
-      }
+
+        stage('Install playwright dependencies') {
+            steps {
+                script {
+                    docker.image('python:3.10.6').inside {
+                        withEnv(['APPLE_USERNAME=${APPLE_USERNAME}',
+                        'APPLE_PASSWORD=${APPLE_PASSWORD}']) {
+                            sh 'python -m playwright install'
+                            sh 'python -m playwright install-deps'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Run e2e tests') {
+            steps {
+                sh 'pytest'
+            }
+        }
     }
-  }
 }
