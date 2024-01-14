@@ -5,10 +5,11 @@ pipeline {
          steps {
             script {
               // Устанавливаем пакеты в /usr/local
-             sh 'pip install --user --prefix=/usr/local -r requirements.txt'
+             // Устанавливаем пакеты в /usr/local
+            sh 'pip install --no-cache-dir --prefix=/usr/local -r requirements.txt'
 
-             // Запускаем тесты
-             sh 'pytest'
+            // Запускаем тесты
+            sh 'pytest'
             }
          }
       }
