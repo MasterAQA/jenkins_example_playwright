@@ -3,12 +3,12 @@ pipeline {
    stages {
       stage('e2e-tests') {
          steps {
-            script {
+            dir('/usr/local') {
               // Устанавливаем пакеты в /usr/local
-             sh 'pip install --no-cache-dir --user -r requirements.txt --ignore-installed'
+                 sh 'pip install --no-cache-dir --user -r requirements.txt --ignore-installed'
 
-            // Запускаем тесты
-            sh 'pytest'
+                // Запускаем тесты
+                sh 'pytest'
             }
          }
       }
