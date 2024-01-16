@@ -22,7 +22,6 @@ main_directories = [
 @allure.title("Test all directories displays")
 def test_main_menu(open_page):
     main_page = MainPage(open_page)
-    assert 1 == 0
 
     main_page.go_to("https://www.apple.com/")
 
