@@ -5,8 +5,9 @@ pipeline {
               steps {
                   withEnv(["HOME=${env.WORKSPACE}"]) {
                                       sh 'pip install --user -r requirements.txt'
+                                      sh 'python -m pip install --upgrade pip'
 //                                       sh 'playwright install --with-deps'
-                                      sh 'python3.6 pytest'
+                                      sh 'pytest'
                                   }
 //                 sh '''
 //                     sudo apt install python3.10-venv
