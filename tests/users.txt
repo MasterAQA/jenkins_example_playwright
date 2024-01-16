@@ -1,3 +1,0 @@
-user4 standard
-user3 premium
-user7 premium

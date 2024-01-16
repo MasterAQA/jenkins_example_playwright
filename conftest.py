@@ -19,8 +19,9 @@ class data:
     apple_password = os.getenv("APPLE_PASSWORD")
 
 
-USERS_FILE_PATH = Path('../users.txt')
+USERS_FILE_PATH = Path("users.txt")
 file_lock = Lock()
+USERS_FILE_PATH = Path(USERS_FILE_PATH).resolve()
 
 
 def unlock_all_user():
