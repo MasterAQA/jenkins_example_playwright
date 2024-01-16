@@ -18,7 +18,7 @@ def test_login(open_page, lock_user_fixture):
     login_page.sign_in.click()
     login_frame = login_page.page.frame_locator("//iframe")
 
-    username = user_with_access("premium", lock_user_fixture)
+    username = user_with_access("premium", lock_user_fixture=lock_user_fixture)
 
     login_page.account_input.keyboard_fill_using_iframe(
         username, login_frame, open_page

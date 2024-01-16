@@ -19,12 +19,14 @@ class data:
     apple_password = os.getenv("APPLE_PASSWORD")
 
 
-USERS_FILE_PATH = Path("users.txt")
+current_file = Path(__file__)
+project_root = current_file.parent
+
+USERS_FILE_PATH = project_root / "users.txt"
 file_lock = Lock()
 USERS_FILE_PATH = Path(USERS_FILE_PATH).resolve()
 
-
-def unlock_all_user():
+def unlock_all_users():
     with file_lock:
         with open(USERS_FILE_PATH, "r") as file:
             lines = file.readlines()
@@ -37,7 +39,7 @@ def unlock_all_user():
             file.writelines(lines)
 
 
-unlock_all_user()
+unlock_all_users()
 
 
 class FixtureData:
@@ -80,7 +82,7 @@ def unlock_user(username):
             file.writelines(lines)
 
 
-def wait_for_available_user(access_level, timeout=6000, poll_interval=1):
+def wait_for_available_users(access_levels, timeout=6000, poll_interval=1):
     start_time = time.time()
 
     while time.time() - start_time < timeout:
@@ -91,16 +93,16 @@ def wait_for_available_user(access_level, timeout=6000, poll_interval=1):
             for i, line in enumerate(lines):
                 if not line.strip().startswith("#"):
                     user, user_access_level = line.strip().split()
-                    if user_access_level == access_level:
-                        return user, access_level
+                    if user_access_level in access_levels:
+                        return user, user_access_level
 
         time.sleep(poll_interval)
 
-    raise ValueError(f"No available user with access level '{access_level}' found within the timeout.")
+    raise ValueError(f"No available user with access levels {access_levels} found within the timeout.")
 
 
-def user_with_access(access_level, lock_user_fixture):
-    user = wait_for_available_user(access_level)[0]
+def user_with_access(*access_levels, lock_user_fixture=None):
+    user, access_level = wait_for_available_users(access_levels)
 
     with file_lock:
         with open(USERS_FILE_PATH, "r") as file:
@@ -113,11 +115,10 @@ def user_with_access(access_level, lock_user_fixture):
         with open(USERS_FILE_PATH, "w") as file:
             file.writelines(lines)
 
-    lock_user_fixture.data = user, access_level # Записываем данные в объект FixtureData
-    return user
+    if lock_user_fixture:
+        lock_user_fixture.data = user, access_level
 
-    # Освобождаем пользователя после завершения теста
-    # unlock_user(user)
+    return user
 
 
 @pytest.fixture(scope="function")
@@ -140,7 +141,7 @@ def open_page(browser: Browser, request, lock_user_fixture):
     )
 
     page.close()
-    page.context.tracing.stop(path="reports/trace.zip")
+    page.context.tracing.stop(path=f"reports/{request.node.name}.zip")
 
     # После окончания теста, проверяем, использовался ли username
     user_with_access_info = lock_user_fixture.data
