@@ -5,7 +5,7 @@ pipeline {
               steps {
                   withEnv(["HOME=${env.WORKSPACE}"]) {
                                       sh 'pip install --user -r requirements.txt'
-                                      sh 'playwright install --with-deps'
+//                                       sh 'playwright install --with-deps'
                                       sh 'pytest'
                                   }
 //                 sh '''
