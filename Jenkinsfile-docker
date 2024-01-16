@@ -3,10 +3,23 @@ pipeline {
     agent {
         dockerfile true
     }
+    environment {
+        PROJECT_PATH = pwd() // pwd() возвращает текущую директорию в Jenkins Pipeline
+    }
     stages {
         stage('run from docker') {
             steps {
-                sh 'python --version'
+                script {
+                    sh 'python --version'
+                }
+            }
+        }
+        stage('run pytest inside docker') {
+            steps {
+                script {
+                    // Здесь передаем путь к проекту внутрь Docker и запускаем pytest
+                    sh "docker run -v ${PROJECT_PATH}:/app -w /app python:3.10 python -m pytest tests"
+                }
             }
         }
     }
