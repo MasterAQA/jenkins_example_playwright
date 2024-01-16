@@ -7,7 +7,7 @@ pipeline {
                                       sh 'pip install --user -r requirements.txt'
                                       sh 'python -m pip install --upgrade pip'
 //                                       sh 'playwright install --with-deps'
-                                      sh 'pytest'
+                                      sh 'python -m pytest'
                                   }
 //                 sh '''
 //                     sudo apt install python3.10-venv
