@@ -6,11 +6,11 @@ pipeline {
                   withEnv(["HOME=${env.WORKSPACE}"]) {
                           sh 'pip install --user -r requirements.txt'
                           sh 'python -m pip install --upgrade pip'
-                          stash includes: 'users.txt', name: 'fileStash'
-                          sh 'sudo chmod 777 /var/lib/jenkins/workspace/'
-                          sh 'cp users.txt /var/lib/jenkins/workspace/'
+//                           stash includes: 'users.txt', name: 'fileStash'
+//                           sh 'sudo chmod 777 /var/lib/jenkins/workspace/'
+//                           sh 'cp users.txt /var/lib/jenkins/workspace/'
 //                                       sh 'playwright install --with-deps'
-                          sh 'python -m pytest'
+                          sh 'python -m pytest tests'
                       }
 //                 sh '''
 //                     sudo apt install python3.10-venv
