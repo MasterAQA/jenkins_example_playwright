@@ -4,10 +4,10 @@ pipeline {
         stage('install playwright') {
               steps {
                 sh '''
-                  python -m pip install --upgrade pip
-                  pip install -r requirements.txt
+                  python -m pip install --upgrade pip --user
+                  pip install -r requirements.txt --user
                 '''
-                sh 'playwright install --with-deps'
+                sh 'playwright install --with-deps --user'
                 sh 'pytest'
               }
 
