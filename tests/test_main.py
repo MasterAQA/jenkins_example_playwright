@@ -20,8 +20,8 @@ main_directories = [
 @allure.feature("Main Page")
 @allure.story("Main Page")
 @allure.title("Test all directories displays")
-def test_main_menu(open):
-    main_page = MainPage(open)
+def test_main_menu(open_page):
+    main_page = MainPage(open_page)
 
     main_page.go_to("https://www.apple.com/")
 
@@ -33,11 +33,11 @@ def test_main_menu(open):
 @allure.feature("Main Page")
 @allure.story("Search")
 @allure.title("Test search function")
-def test_search_function(open):
-    main_page = MainPage(open)
+def test_search_function(open_page):
+    main_page = MainPage(open_page)
 
     main_page.go_to("https://www.apple.com/")
     main_page.search_icon_button.click()
-    main_page.search_input.keyboard_fill("iPhone", open)
+    main_page.search_input.keyboard_fill("iPhone", open_page)
 
     main_page.result_search.check_is_visible()

@@ -9,8 +9,8 @@ from pages.store_page import StorePage
 @allure.feature("Cart")
 @allure.story("Add in Cart")
 @allure.title("Add product in Cart")
-def test_add_product(page):
-    store_page = StorePage(page)
+def test_add_product(open_page):
+    store_page = StorePage(open_page)
 
     store_page.go_to("https://www.apple.com/store")
     store_page.go_to_category_airpods.click()
@@ -25,9 +25,9 @@ def test_add_product(page):
 @allure.feature("Cart")
 @allure.story("Add and Remove")
 @allure.title("Add product, and remove from Cart")
-def test_add_and_remove_product(open):
-    store_page = StorePage(open)
-    cart_page = CartPage(open)
+def test_add_and_remove_product(open_page):
+    store_page = StorePage(open_page)
+    cart_page = CartPage(open_page)
 
     store_page.go_to("https://www.apple.com/store")
     store_page.go_to_category_airpods.click()
