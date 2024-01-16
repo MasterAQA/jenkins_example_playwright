@@ -3,15 +3,20 @@ pipeline {
    stages {
         stage('install playwright') {
               steps {
-                sh '''
-                    sudo apt install python3.10-venv
-                    python -m venv env
-                    source ./env/bin/activate
-                    python -m pip install --upgrade pip
-                    pip install -r requirements.txt
-                '''
-                sh 'playwright install --with-deps'
-                sh 'pytest'
+                  withEnv(["HOME=${env.WORKSPACE}"]) {
+                                      sh 'pip install --user -r requirements.txt'
+                                      sh 'playwright install --with-deps'
+                                      sh 'pytest'
+                                  }
+//                 sh '''
+//                     sudo apt install python3.10-venv
+//                     python -m venv env
+//                     source ./env/bin/activate
+//                     python -m pip install --upgrade pip
+//                     pip install -r requirements.txt
+//                 '''
+//                 sh 'playwright install --with-deps'
+//                 sh 'pytest'
               }
 
 //       stage('e2e-tests') {
