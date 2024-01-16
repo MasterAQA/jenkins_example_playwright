@@ -4,9 +4,10 @@ pipeline {
         stage('install playwright') {
               steps {
                 sh '''
-                  npm i -D @playwright/test
-                  npx playwright install
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
                 '''
+                sh 'playwright install --with-deps'
                 sh 'pytest'
               }
 
