@@ -3,16 +3,16 @@ pipeline {
    stages {
       stage('e2e-tests') {
          steps {
-            script {
-            sh '''wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py --user
-                  cd .local/bin
-                  ./pip install -r requirements.txt --user'''
+            sh 'npm ci'
+            sh 'npx playwright install --with-deps'
+            sh '''pip install playwright
+                playwright install --with-deps'''
               // Устанавливаем пакеты в /usr/local
 //              sh 'pip install --no-cache-dir --user -r requirements.txt --ignore-installed'
 
              // Запускаем тесты
              sh 'pytest'
-            }
+
          }
       }
    }
