@@ -4,7 +4,7 @@ pipeline {
         stage('install playwright') {
               steps {
                 sh '''
-                    apt install python3.10-venv
+                    sudo apt install python3.10-venv
                     python -m venv env
                     source ./env/bin/activate
                     python -m pip install --upgrade pip
