@@ -1,12 +1,12 @@
 pipeline {
    agent { docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy' } }
    stages {
-        stage('Setup Selenium Grid') {
-            steps {
-                // Установка и запуск Selenium Grid
-                sh 'java -jar selenium-server-4.17.0.jar standalone --selenium-manager true --session-timeout 999999 --session-request-timeout 999999 --max-sessions 5'
-                }
-            }
+//         stage('Setup Selenium Grid') {
+//             steps {
+//                 // Установка и запуск Selenium Grid
+//                 sh 'java -jar selenium-server-4.17.0.jar standalone --selenium-manager true --session-timeout 999999 --session-request-timeout 999999 --max-sessions 5'
+//                 }
+//             }
 
         stage('install playwright') {
               steps {
@@ -17,7 +17,7 @@ pipeline {
 //                           sh 'sudo chmod 777 /var/lib/jenkins/workspace/'
 //                           sh 'cp users.txt /var/lib/jenkins/workspace/'
 //                                       sh 'playwright install --with-deps'
-                          sh '$env:SELENIUM_REMOTE_URL = "http://192.168.100.4:4444"; python -m pytest tests'
+                          sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444; python -m pytest tests'
                       }
 //                 sh '''
 //                     sudo apt install python3.10-venv
