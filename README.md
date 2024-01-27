@@ -68,6 +68,9 @@ item from the cart, check that the cart is empty
 ## Website URL used for testing
 - https://www.apple.com
 
-
+## selenium grid command
+```
+- $env:SELENIUM_REMOTE_URL = "http://192.168.100.4:4444"; pytest
+```
 
 
