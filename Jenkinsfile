@@ -17,7 +17,7 @@ pipeline {
 //                           sh 'sudo chmod 777 /var/lib/jenkins/workspace/'
 //                           sh 'cp users.txt /var/lib/jenkins/workspace/'
 //                                       sh 'playwright install --with-deps'
-                          sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444; python -m pytest tests'
+                          sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                       }
 //                 sh '''
 //                     sudo apt install python3.10-venv
