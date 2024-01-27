@@ -68,6 +68,14 @@ item from the cart, check that the cart is empty
 ## Website URL used for testing
 - https://www.apple.com
 
+## Jenkinsfile and docker
+```
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+newgrp docker
+sudo chmod 666 /var/run/docker.sock
+```
+
 ## selenium grid command
 ```
 - $env:SELENIUM_REMOTE_URL = "http://192.168.100.4:4444"; pytest
