@@ -36,7 +36,9 @@ pipeline {
                     }
        post {
            always {
-               stash name: "artifacts", includes: "artifacts/**/*"
+               stash name: "reports", includes: "reports/**"
+//                            name reports archiveArtifacts 'reports/**'  // Архивируем все файлы в папке reports
+
            }
        }
 //                 sh '''
