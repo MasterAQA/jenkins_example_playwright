@@ -9,14 +9,14 @@ pipeline {
 //                 }
 //             }
 //         }
-    agent none
+//     agent none
     stages {
         stage('Install Playwright') {
             agent { docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'} }
-//             steps {
-//                 echo 'Hello, Maven'
+            steps {
+                echo 'Hello, Maven'
 //                 sh 'mvn --version'
-//             }
+            }
         }
 
 
