@@ -35,15 +35,40 @@ pipeline {
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
 
-       post {
-           always {
-                withEnv(["HOME=${env.WORKSPACE}"]){
-                    archiveArtifacts artifacts: 'reports/'  // Архивируем все файлы в папке reports
-                    archiveArtifacts artifacts: 'file:///var/lib/jenkins/workspace/jenkins-pipeline/reports/html_report/report.html'  // Архивируем все файлы в папке reports
-                    archiveArtifacts artifacts: '/var/lib/jenkins/workspace/jenkins-pipeline/reports/report.xml'  // Архивируем все файлы в папке reports
+//        post {
+//            always {
+//                 withEnv(["HOME=${env.WORKSPACE}"]){
+//                     archiveArtifacts artifacts: 'reports/'  // Архивируем все файлы в папке reports
+//                     archiveArtifacts artifacts: 'file:///var/lib/jenkins/workspace/jenkins-pipeline/reports/html_report/report.html'  // Архивируем все файлы в папке reports
+//                     archiveArtifacts artifacts: '/var/lib/jenkins/workspace/jenkins-pipeline/reports/report.xml'  // Архивируем все файлы в папке reports
+//                 }
+//            }
+//        }
+        stage('Create build output') {
+                    steps {
+                        script {
+                            // Создаем директорию для вывода
+                            sh "mkdir -p output"
+
+                            // Записываем файл, который нужно архивировать
+                            writeFile file: "output/usefulfile.txt", text: "Этот файл полезен, его нужно архивировать."
+
+                            // Записываем бесполезный файл, который не нужно архивировать
+                            writeFile file: "output/uselessfile.md", text: "Этот файл бесполезен, его архивировать не нужно."
+                        }
+                    }
                 }
-           }
-       }
+            }
+
+        post {
+            always {
+                stage('Archive build output') {
+                    steps {
+                        // Архивируем артефакты сборки
+                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
+                    }
+                }
+            }
 
 
 //        post {
