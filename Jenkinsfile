@@ -36,12 +36,29 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
-       node {
-           stage "Create build output"
 
-           archiveArtifacts artifacts: 'reports/'
+       stage('Create build output') {
+           steps {
+               script {
+                   // Создаем директорию для вывода
+                   sh "mkdir -p output"
 
-       }
+                   // Записываем файл, который нужно архивировать
+                   writeFile file: "output/usefulfile.txt", text: "Этот файл полезен, его нужно архивировать."
+
+                   // Записываем бесполезный файл, который не нужно архивировать
+                   writeFile file: "output/uselessfile.md", text: "Этот файл бесполезен, его архивировать не нужно."
+
+                   archiveArtifacts artifacts: 'reports/'
+               }
+           }
+
+//        node {
+//            stage "Create build output"
+//
+//            archiveArtifacts artifacts: 'reports/'
+//
+//        }
 //                 sh '''
 //                     sudo apt install python3.10-venv
 //                     python -m venv env
