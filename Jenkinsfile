@@ -37,15 +37,14 @@ pipeline {
 
        post {
            always {
-               stage('Archive build output') {
-                   steps {
-                        withEnv(["HOME=${env.WORKSPACE}"]){
-                            archiveArtifacts artifacts: 'reports/'  // Архивируем все файлы в папке reports
-                        }
-                   }
-               }
+                withEnv(["HOME=${env.WORKSPACE}"]){
+                    archiveArtifacts artifacts: 'reports/'  // Архивируем все файлы в папке reports
+                    archiveArtifacts artifacts: 'file:///var/lib/jenkins/workspace/jenkins-pipeline/reports/html_report/report.html'  // Архивируем все файлы в папке reports
+                    archiveArtifacts artifacts: '/var/lib/jenkins/workspace/jenkins-pipeline/reports/report.xml'  // Архивируем все файлы в папке reports
+                }
            }
        }
+
 
 //        post {
 //            always {
