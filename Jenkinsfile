@@ -52,6 +52,7 @@ pipeline {
                    archiveArtifacts artifacts: 'reports/'
                }
            }
+       }
 
 //        node {
 //            stage "Create build output"
