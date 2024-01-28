@@ -1,23 +1,11 @@
 pipeline {
-//     stages{
-//         stage('Install Playwright') {
-//             steps{
-//                 agent {
-//                     docker {
-//                         image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'
-//                     }
-//                 }
-//             }
-//         }
-//     agent none
-    stages {
-        stage('Install Playwright') {
-            agent { docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'} }
-            steps {
-                echo 'Hello, Maven'
-//                 sh 'mvn --version'
-            }
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'
         }
+    }
+
+
 
 
 //         stage('Setup Selenium Grid') {
@@ -26,7 +14,7 @@ pipeline {
 //                 sh 'java -jar selenium-server-4.17.0.jar standalone --selenium-manager true --session-timeout 999999 --session-request-timeout 999999 --max-sessions 5'
 //                 }
 //             }
-//     stages{
+    stages{
         stage('install requirements') {
               steps {
                   withEnv(["HOME=${env.WORKSPACE}"]) {
