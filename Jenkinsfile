@@ -1,6 +1,11 @@
 pipeline {
-   agent { docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy' } }
-   stages {
+    stages {
+       stage('Install Playwright') {
+                     steps {
+                            agent { docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy' } }
+                     }
+       }
+
 //         stage('Setup Selenium Grid') {
 //             steps {
 //                 // Установка и запуск Selenium Grid
@@ -8,17 +13,23 @@ pipeline {
 //                 }
 //             }
 
-        stage('install playwright') {
+        stage('install requirements') {
               steps {
                   withEnv(["HOME=${env.WORKSPACE}"]) {
                           sh 'pip install --user -r requirements.txt'
-                          sh 'python -m pip install --upgrade pip'
+//                           sh 'python -m pip install --upgrade pip'
 //                           stash includes: 'users.txt', name: 'fileStash'
 //                           sh 'sudo chmod 777 /var/lib/jenkins/workspace/'
 //                           sh 'cp users.txt /var/lib/jenkins/workspace/'
 //                                       sh 'playwright install --with-deps'
-                          sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
+//                           sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                       }
+       stage('Run tests') {
+            steps {
+                withEnv(["HOME=${env.WORKSPACE}"]) {
+//                                         sh 'python -m pip install --upgrade pip'
+                        sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
+                    }
 //                 sh '''
 //                     sudo apt install python3.10-venv
 //                     python -m venv env
