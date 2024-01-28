@@ -42,7 +42,7 @@ pipeline {
                 always {
                     // Архивируем артефакты сборки
                     archiveArtifacts artifacts: 'reports/report.xml'
-                    archiveArtifacts artifacts: 'reports/html_report'
+                    archiveArtifacts artifacts: 'reports/html_report/**'
                     archiveArtifacts artifacts: 'reports/trace.zip'
 //                     archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
                 }
