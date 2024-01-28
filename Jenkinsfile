@@ -1,8 +1,6 @@
 pipeline {
     agent {
-
         docker {
-            stage "Create build output"
             image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'
         }
     }
@@ -83,6 +81,6 @@ pipeline {
 
 
 
-       }
+
    }
 }
