@@ -1,8 +1,9 @@
 pipeline {
 
         agent {
-            docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy' }
-            label 'Install Playwright'
+            docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'
+            label 'Install Playwright'}
+
         }
 
 
