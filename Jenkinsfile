@@ -34,7 +34,7 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
-       post {
+       stage("Reports") {
            always {
                 archiveArtifacts 'reports/**'  // Архивируем все файлы в папке reports
            }
