@@ -35,8 +35,9 @@ pipeline {
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
        stage("Reports") {
-           always {
-                archiveArtifacts 'reports/**'  // Архивируем все файлы в папке reports
+              steps{
+//            always {
+                archiveArtifacts artifacts 'reports/**'  // Архивируем все файлы в папке reports
            }
        }
 //                 sh '''
