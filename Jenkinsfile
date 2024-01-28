@@ -34,29 +34,26 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
-            }
-       }
-        post {
-                always {
-                   stage('Archive build output') {
-                       steps {
-                            withEnv(["HOME=${env.WORKSPACE}"]){
-                           // Архивируем артефакты сборки
-                           archiveArtifacts artifacts: 'reports'
-            //                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
-                            }
-                       }
-                   }
+       post {
+           always {
+                withEnv(["HOME=${env.WORKSPACE}"]){
+                    archiveArtifacts artifacts: 'reports/**'  // Архивируем все файлы в папке reports
                 }
-        }
+           }
+       }
 
-
-
-//        node {
-//            stage "Create build output"
-//
-//            archiveArtifacts artifacts: 'reports/'
-//
+//        post {
+//            always {
+//               stage('Archive build output') {
+//                   steps {
+//                        withEnv(["HOME=${env.WORKSPACE}"]){
+//                       // Архивируем артефакты сборки
+//                       archiveArtifacts artifacts: 'reports'
+//        //                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
+//                        }
+//                   }
+//               }
+//            }
 //        }
 //                 sh '''
 //                     sudo apt install python3.10-venv
@@ -67,7 +64,7 @@ pipeline {
 //                 '''
 //                 sh 'playwright install --with-deps'
 //                 sh 'pytest'
-
+              }
 
 //       stage('e2e-tests') {
 //          steps {
@@ -85,6 +82,6 @@ pipeline {
 
 
 
-
+      }
    }
 }
