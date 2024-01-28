@@ -1,5 +1,6 @@
 pipeline {
     agent {
+        stage "Create build output"
         docker {
             image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'
         }
@@ -34,10 +35,11 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
-       post {
-           always {
-                archiveArtifacts '**/reports'  // Архивируем все файлы в папке reports
-           }
+       node {
+           stage "Create build output"
+
+           archiveArtifacts artifacts: 'reports/'
+
        }
 //                 sh '''
 //                     sudo apt install python3.10-venv
