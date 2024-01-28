@@ -46,26 +46,27 @@ pipeline {
 //                 }
 //            }
 //        }
-        stage('Create build output') {
-                    steps {
-                        script {
-                            // Создаем директорию для вывода
-                            sh "mkdir -p output"
-
-                            // Записываем файл, который нужно архивировать
-                            writeFile file: "output/usefulfile.txt", text: "Этот файл полезен, его нужно архивировать."
-
-                            // Записываем бесполезный файл, который не нужно архивировать
-                            writeFile file: "output/uselessfile.md", text: "Этот файл бесполезен, его архивировать не нужно."
-                        }
-                    }
-        }
+//         stage('Create build output') {
+//                     steps {
+//                         script {
+//                             // Создаем директорию для вывода
+//                             sh "mkdir -p output"
+//
+//                             // Записываем файл, который нужно архивировать
+//                             writeFile file: "output/usefulfile.txt", text: "Этот файл полезен, его нужно архивировать."
+//
+//                             // Записываем бесполезный файл, который не нужно архивировать
+//                             writeFile file: "output/uselessfile.md", text: "Этот файл бесполезен, его архивировать не нужно."
+//                         }
+//                     }
+//         }
     }
 
         post {
                 always {
                     // Архивируем артефакты сборки
-                    archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
+                    archiveArtifacts artifacts: 'reports/'
+//                     archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
                 }
             }
 
