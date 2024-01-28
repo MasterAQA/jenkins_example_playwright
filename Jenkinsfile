@@ -36,16 +36,20 @@ pipeline {
                     }
             }
        }
-
-       stage('Archive build output') {
-           steps {
-                withEnv(["HOME=${env.WORKSPACE}"]){
-               // Архивируем артефакты сборки
-               archiveArtifacts artifacts: 'reports'
-//                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
+        post {
+                always {
+                   stage('Archive build output') {
+                       steps {
+                            withEnv(["HOME=${env.WORKSPACE}"]){
+                           // Архивируем артефакты сборки
+                           archiveArtifacts artifacts: 'reports'
+            //                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
+                            }
+                       }
+                   }
                 }
-           }
-       }
+        }
+
 
 
 //        node {
