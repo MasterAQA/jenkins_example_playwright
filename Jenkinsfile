@@ -54,7 +54,7 @@ pipeline {
                     // Архивируем артефакты сборки
 //                     archiveArtifacts artifacts: 'reports/'
                     archiveArtifacts artifacts: 'reports/report.xml'
-                    archiveArtifacts artifacts: 'reports/report.html'
+                    archiveArtifacts artifacts: 'reports/html_report/report.html'
                     archiveArtifacts artifacts: 'reports/trace.zip'
 //                     archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
                 }
