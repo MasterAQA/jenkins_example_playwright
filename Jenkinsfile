@@ -34,10 +34,11 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
-       stage('Archive build output') {
-           steps {
-               post {
-                   always {
+
+       post {
+           always {
+               stage('Archive build output') {
+                   steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                             archiveArtifacts artifacts: 'reports/'  // Архивируем все файлы в папке reports
                         }
