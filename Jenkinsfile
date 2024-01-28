@@ -34,6 +34,8 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
+            }
+       }
 
 //        post {
 //            always {
@@ -57,16 +59,13 @@ pipeline {
                             writeFile file: "output/uselessfile.md", text: "Этот файл бесполезен, его архивировать не нужно."
                         }
                     }
-                }
-            }
+        }
+    }
 
         post {
-            always {
-                stage('Archive build output') {
-                    steps {
-                        // Архивируем артефакты сборки
-                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
-                    }
+                always {
+                    // Архивируем артефакты сборки
+                    archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
                 }
             }
 
@@ -93,7 +92,7 @@ pipeline {
 //                 '''
 //                 sh 'playwright install --with-deps'
 //                 sh 'pytest'
-              }
+
 
 //       stage('e2e-tests') {
 //          steps {
@@ -111,6 +110,6 @@ pipeline {
 
 
 
-      }
-   }
+
+
 }
