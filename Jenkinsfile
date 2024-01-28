@@ -52,8 +52,10 @@ pipeline {
         post {
                 always {
                     // Архивируем артефакты сборки
-                    archiveArtifacts artifacts: 'reports/', excludes: 'reports/allure_report'
-                    archiveArtifacts artifacts: 'reports/allure_report'
+//                     archiveArtifacts artifacts: 'reports/'
+                    archiveArtifacts artifacts: 'reports/report.xml'
+                    archiveArtifacts artifacts: 'reports/report.html'
+                    archiveArtifacts artifacts: 'reports/trace.zip'
 //                     archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
                 }
             }
