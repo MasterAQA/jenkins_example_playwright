@@ -23,7 +23,9 @@ pipeline {
 //                           sh 'cp users.txt /var/lib/jenkins/workspace/'
 //                                       sh 'playwright install --with-deps'
 //                           sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
-                      }
+                  }
+              }
+       }
        stage('Run tests') {
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
