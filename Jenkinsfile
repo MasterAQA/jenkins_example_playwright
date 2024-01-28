@@ -37,22 +37,14 @@ pipeline {
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
 
-       stage('Create build output') {
-           steps {
-               script {
-                   // Создаем директорию для вывода
-                   sh "mkdir -p output"
-
-                   // Записываем файл, который нужно архивировать
-                   writeFile file: "output/usefulfile.txt", text: "Этот файл полезен, его нужно архивировать."
-
-                   // Записываем бесполезный файл, который не нужно архивировать
-                   writeFile file: "output/uselessfile.md", text: "Этот файл бесполезен, его архивировать не нужно."
-
-                   archiveArtifacts artifacts: 'reports/'
+       stage('Archive build output') {
+                   steps {
+                       // Архивируем артефакты сборки
+                       archiveArtifacts artifacts: 'reports'
+//                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
+                   }
                }
-           }
-       }
+
 
 //        node {
 //            stage "Create build output"
