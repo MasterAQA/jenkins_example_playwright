@@ -6,14 +6,13 @@ pipeline {
     }
 
 
-
-
 //         stage('Setup Selenium Grid') {
 //             steps {
 //                 // Установка и запуск Selenium Grid
 //                 sh 'java -jar selenium-server-4.17.0.jar standalone --selenium-manager true --session-timeout 999999 --session-request-timeout 999999 --max-sessions 5'
 //                 }
 //             }
+
     stages{
         stage('install requirements') {
               steps {
@@ -37,28 +36,18 @@ pipeline {
             }
        }
 
-//        post {
-//            always {
-//                 withEnv(["HOME=${env.WORKSPACE}"]){
-//                     archiveArtifacts artifacts: 'reports/'  // Архивируем все файлы в папке reports
-//                     archiveArtifacts artifacts: 'file:///var/lib/jenkins/workspace/jenkins-pipeline/reports/html_report/report.html'  // Архивируем все файлы в папке reports
-//                     archiveArtifacts artifacts: '/var/lib/jenkins/workspace/jenkins-pipeline/reports/report.xml'  // Архивируем все файлы в папке reports
-//                 }
-//            }
-//        }
-//
     }
 
         post {
                 always {
                     // Архивируем артефакты сборки
-//                     archiveArtifacts artifacts: 'reports/'
                     archiveArtifacts artifacts: 'reports/report.xml'
                     archiveArtifacts artifacts: 'reports/html_report/report.html'
                     archiveArtifacts artifacts: 'reports/trace.zip'
 //                     archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
                 }
             }
+}
 
 
 //        post {
@@ -103,4 +92,3 @@ pipeline {
 
 
 
-}
