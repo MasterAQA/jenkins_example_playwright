@@ -34,6 +34,11 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
+       post {
+           always {
+               stash name: "artifacts", includes: "artifacts/**/*"
+           }
+       }
 //                 sh '''
 //                     sudo apt install python3.10-venv
 //                     python -m venv env
