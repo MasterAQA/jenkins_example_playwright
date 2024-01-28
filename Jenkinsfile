@@ -1,9 +1,7 @@
 pipeline {
-
-        agent {
-            docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy'
-            label 'Install Playwright'}
-
+    stages{
+        stage('Install Playwright') {
+                docker { image 'mcr.microsoft.com/playwright/python:v1.32.1-jammy' }
         }
 
 
@@ -13,7 +11,7 @@ pipeline {
 //                 sh 'java -jar selenium-server-4.17.0.jar standalone --selenium-manager true --session-timeout 999999 --session-request-timeout 999999 --max-sessions 5'
 //                 }
 //             }
-    stages{
+//     stages{
         stage('install requirements') {
               steps {
                   withEnv(["HOME=${env.WORKSPACE}"]) {
