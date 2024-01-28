@@ -36,14 +36,18 @@ pipeline {
 //                                         sh 'python -m pip install --upgrade pip'
                         sh 'SELENIUM_REMOTE_URL=http://192.168.100.4:4444 python -m pytest tests'
                     }
+            }
+       }
 
        stage('Archive build output') {
-                   steps {
-                       // Архивируем артефакты сборки
-                       archiveArtifacts artifacts: 'reports'
+           steps {
+                withEnv(["HOME=${env.WORKSPACE}"]){
+               // Архивируем артефакты сборки
+               archiveArtifacts artifacts: 'reports'
 //                        archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
-                   }
-               }
+                }
+           }
+       }
 
 
 //        node {
@@ -61,7 +65,7 @@ pipeline {
 //                 '''
 //                 sh 'playwright install --with-deps'
 //                 sh 'pytest'
-              }
+
 
 //       stage('e2e-tests') {
 //          steps {
@@ -79,6 +83,6 @@ pipeline {
 
 
 
-      }
+
    }
 }
