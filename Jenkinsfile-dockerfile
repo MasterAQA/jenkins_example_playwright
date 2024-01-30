@@ -17,7 +17,7 @@ pipeline {
         stage('run pytest inside docker') {
             steps {
                 script {
-                    // Здесь передаем путь к проекту внутрь Docker и запускаем pytest
+                    // Передаем путь к проекту внутрь Docker и запускаем pytest
                     sh "docker run -v ${PROJECT_PATH}:/app -w /app python:3.10 python -m pytest tests"
                 }
             }
